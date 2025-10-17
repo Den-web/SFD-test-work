@@ -1,17 +1,17 @@
 "use client";
 import { Table, Typography, Alert } from "antd";
 import { useAppSelector } from "../hooks/useStore";
-import { useGetHistoricalRatesQuery } from "@/shared/api/endpoints/exchangeApi";
+import { useExchangeRates } from "@/shared/hooks/useExchangeRates";
 
 export default function RatesTable() {
   const { baseCurrency, selectedDate, targetCurrencies } = useAppSelector((s) => s.exchange);
-  const { data, isLoading, error } = useGetHistoricalRatesQuery({
-    base: baseCurrency,
-    endDate: selectedDate,
-    days: 7,
+  const { loading, error, series, dates } = useExchangeRates({
+    baseCurrency,
+    compareList: targetCurrencies,
+    selectedDate,
   });
 
-  if (error) return <Alert type="error" message="Failed to load rates" />;
+  if (error) return <Alert type="error" message={error} />;
 
   const columns = [
     {
@@ -27,11 +27,11 @@ export default function RatesTable() {
     })),
   ];
 
-  const dataSource = (data?.dates || []).map((date) => {
+  const dataSource = (dates || []).map((date, idx) => {
     const row: any = { key: date, date };
-    const map = data?.ratesByDate[date] || {};
     targetCurrencies.forEach((code) => {
-      row[code] = map[code];
+      const key = code.toUpperCase();
+      row[code] = series[key]?.[idx];
     });
     return row;
   });
@@ -42,7 +42,7 @@ export default function RatesTable() {
         {baseCurrency.toUpperCase()} vs selected currencies (last 7 days)
       </Typography.Title>
       <Table
-        loading={isLoading}
+        loading={loading}
         columns={columns as any}
         dataSource={dataSource}
         pagination={false}
