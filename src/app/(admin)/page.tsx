@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { ROUTES } from "@/shared/utils/constants";
 
-export default function HomePage() {
+export default function AdminIndex() {
   redirect(ROUTES.DASHBOARD);
 }
