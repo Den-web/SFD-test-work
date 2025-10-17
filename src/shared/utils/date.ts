@@ -16,10 +16,11 @@ export function getDateRange(endDate: Date, days: number): string[] {
 }
 
 export function clampToPast90Days(date: Date): Date {
-  const now = new Date();
-  const min = new Date();
-  min.setDate(now.getDate() - 90);
-  if (date > now) return now;
+  const nowMs = Date.now();
+  const now = new Date(nowMs);
+  const min = new Date(nowMs);
+  min.setDate(min.getDate() - 90);
+  if (date.getTime() > nowMs) return new Date(nowMs);
   if (date < min) return min;
   return date;
 }

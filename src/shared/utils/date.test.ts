@@ -15,14 +15,20 @@ describe("date utils", () => {
   });
 
   it("clamps to past 90 days and not future", () => {
-    const now = new Date();
-    const tooOld = new Date();
+    const fixedNow = new Date("2025-10-17T00:00:00.000Z").getTime();
+    const spy = jest.spyOn(Date, "now").mockReturnValue(fixedNow);
+
+    const now = new Date(fixedNow);
+    const tooOld = new Date(fixedNow);
     tooOld.setDate(now.getDate() - 120);
-    const future = new Date();
+    const future = new Date(fixedNow);
     future.setDate(now.getDate() + 5);
+
     expect(clampToPast90Days(tooOld).getTime()).toBeGreaterThanOrEqual(
       new Date(now.getFullYear(), now.getMonth(), now.getDate() - 90).getTime(),
     );
     expect(clampToPast90Days(future).getTime()).toBeLessThanOrEqual(now.getTime());
+
+    spy.mockRestore();
   });
 });
