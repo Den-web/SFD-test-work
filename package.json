@@ -19,9 +19,13 @@
     ]
   },
   "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "@reduxjs/toolkit": "^2.9.1",
+    "antd": "^5.27.5",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
