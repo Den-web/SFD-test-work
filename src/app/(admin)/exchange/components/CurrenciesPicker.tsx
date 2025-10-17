@@ -13,10 +13,14 @@ export default function CurrenciesPicker() {
   const { baseCurrency, targetCurrencies } = useAppSelector((s) => s.exchange);
   const { data: currencies } = useGetCurrenciesQuery();
 
-  const options = Object.entries(currencies || {}).map(([code, name]) => ({
+  const entries = Object.entries(currencies || {});
+  const options = entries.map(([code, name]) => ({
     label: `${code.toUpperCase()} — ${name}`,
     value: code,
   }));
+  const optionSet = new Set(entries.map(([code]) => code));
+  const safeBaseValue = optionSet.has(baseCurrency) ? baseCurrency : undefined;
+  const safeTargets = targetCurrencies.filter((c) => optionSet.has(c));
 
   return (
     <Space direction="vertical" size="middle" style={{ width: "100%" }}>
@@ -25,9 +29,12 @@ export default function CurrenciesPicker() {
         <Select
           showSearch
           placeholder="Select base"
-          value={baseCurrency}
+          value={safeBaseValue}
           options={options}
           style={{ width: 360 }}
+          loading={!currencies}
+          virtual={false}
+          optionFilterProp="label"
           onChange={(v) => dispatch(setBaseCurrency(v))}
         />
       </div>
@@ -36,9 +43,12 @@ export default function CurrenciesPicker() {
         <Typography.Text strong>Target currencies (3–7)</Typography.Text>
         <Select
           mode="multiple"
-          value={targetCurrencies}
+          value={safeTargets}
           options={options}
           style={{ width: 600 }}
+          loading={!currencies}
+          virtual={false}
+          optionFilterProp="label"
           onSelect={(v) => dispatch(addTargetCurrency(v))}
           onDeselect={(v) => dispatch(removeTargetCurrency(v))}
         />

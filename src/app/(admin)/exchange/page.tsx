@@ -8,9 +8,10 @@ import FullScreenLoader from "@/shared/ui/atoms/FullScreenLoader";
 export default function ExchangePage() {
   const { isLoading } = useGetCurrenciesQuery();
 
+  if (isLoading) return <FullScreenLoader />;
+
   return (
     <div style={{ display: "grid", gap: 24 }}>
-      {isLoading ? <FullScreenLoader /> : null}
       <div style={{ display: "flex", gap: 24 }}>
         <CurrenciesPicker />
         <DatePickerControl />
