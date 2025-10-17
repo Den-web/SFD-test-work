@@ -3,6 +3,7 @@ import { baseApi } from "@/shared/api/baseApi";
 import userReducer from "./slices/userSlice";
 import uiReducer from "./slices/uiSlice";
 import exchangeReducer from "./slices/exchangeSlice";
+import { persistExchangeMiddleware } from "./middleware/persistExchange";
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,7 @@ export const store = configureStore({
     ui: uiReducer,
     exchange: exchangeReducer,
   },
-  middleware: (getDefault) => getDefault().concat(baseApi.middleware),
+  middleware: (getDefault) => getDefault().concat(baseApi.middleware, persistExchangeMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -22,6 +22,13 @@ const exchangeSlice = createSlice({
   name: "exchange",
   initialState,
   reducers: {
+    hydrate(state, action: PayloadAction<Partial<ExchangeState>>) {
+      const { baseCurrency, selectedDate, targetCurrencies } = action.payload;
+      if (baseCurrency) state.baseCurrency = baseCurrency.toLowerCase();
+      if (selectedDate) state.selectedDate = selectedDate;
+      if (targetCurrencies && targetCurrencies.length)
+        state.targetCurrencies = targetCurrencies.map((c) => c.toLowerCase());
+    },
     setBaseCurrency(state, action: PayloadAction<string>) {
       const next = action.payload.toLowerCase();
       state.baseCurrency = next;
@@ -52,6 +59,11 @@ const exchangeSlice = createSlice({
   },
 });
 
-export const { setBaseCurrency, setSelectedDate, addTargetCurrency, removeTargetCurrency } =
-  exchangeSlice.actions;
+export const {
+  hydrate,
+  setBaseCurrency,
+  setSelectedDate,
+  addTargetCurrency,
+  removeTargetCurrency,
+} = exchangeSlice.actions;
 export default exchangeSlice.reducer;
