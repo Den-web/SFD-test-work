@@ -1,3 +1,4 @@
+"use client";
 import CurrenciesPicker from "./components/CurrenciesPicker";
 import DatePickerControl from "./components/DatePickerControl";
 import RatesTable from "./components/RatesTable";
