@@ -4,4 +4,5 @@ export const ROUTES = {
   ROOT: "/",
   ADMIN: "/",
   DASHBOARD: "/dashboard",
+  EXCHANGE: "/exchange",
 } as const;

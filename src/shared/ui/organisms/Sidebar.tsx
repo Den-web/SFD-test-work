@@ -7,7 +7,10 @@ export default function Sidebar() {
     <Menu
       mode="inline"
       defaultSelectedKeys={["dashboard"]}
-      items={[{ key: "dashboard", label: "Dashboard", href: ROUTES.DASHBOARD }]}
+      items={[
+        { key: "dashboard", label: "Dashboard", href: ROUTES.DASHBOARD },
+        { key: "exchange", label: "Exchange", href: ROUTES.EXCHANGE },
+      ]}
       style={{ height: "100%" }}
     />
   );
