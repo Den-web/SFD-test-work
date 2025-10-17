@@ -6,14 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "prepare": "husky install"
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "echo 'no tests yet'",
+    "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
+    "*.{ts,tsx}": [
       "eslint --fix"
     ],
-    "*.{ts,tsx,js,jsx,css,md,json}": [
+    "*.{ts,tsx,css,md,json}": [
       "prettier --write"
     ]
   },
@@ -23,6 +24,7 @@
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@types/node": "latest",
     "@types/react": "latest",
     "eslint": "latest",
@@ -35,4 +37,3 @@
     "typescript": "latest"
   }
 }
-
