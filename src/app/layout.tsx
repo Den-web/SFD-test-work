@@ -1,5 +1,8 @@
 import "../styles/globals.css";
 import React from "react";
+import StoreProvider from "./providers/StoreProvider";
+import { ConfigProvider } from "antd";
+import { customTheme } from "@/styles/theme";
 
 export const metadata = {
   title: "Archestr Admin",
@@ -9,7 +12,11 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ConfigProvider theme={customTheme}>
+          <StoreProvider>{children}</StoreProvider>
+        </ConfigProvider>
+      </body>
     </html>
   );
 }
