@@ -39,9 +39,9 @@ describe("persistExchangeMiddleware", () => {
     } as any;
     // assign to both global and window since middleware uses window.localStorage
     // assign to both global and window
-    // @ts-ignore
+    // @ts-ignore - test env
     global.localStorage = mocked;
-    // @ts-ignore
+    // @ts-ignore - test env
     window.localStorage = mocked;
   });
 
