@@ -1,5 +1,5 @@
 {
-  "name": "archestr-admin",
+  "name": "exchange-rates-admin",
   "private": true,
   "version": "0.1.0",
   "scripts": {
@@ -9,7 +9,8 @@
     "lint": "eslint src --ext .ts,.tsx",
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "release": "standard-version"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -51,6 +52,7 @@
     "jest-junit": "^16.0.0",
     "lint-staged": "latest",
     "prettier": "latest",
+    "standard-version": "^9.5.0",
     "ts-jest": "^29.4.5",
     "typescript": "latest"
   }

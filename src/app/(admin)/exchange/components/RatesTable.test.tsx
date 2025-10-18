@@ -13,10 +13,13 @@ describe("RatesTable", () => {
     });
 
     // Mock fetch used by useExchangeRates
-    global.fetch = jest.fn(async () => ({
-      ok: true,
-      json: async () => ({ gbp: { usd: 1.2, eur: 1.1 } }),
-    })) as any;
+    global.fetch = jest.fn(
+      async () =>
+        ({
+          ok: true,
+          json: async () => ({ gbp: { usd: 1.2, eur: 1.1 } }),
+        }) as unknown as Response,
+    ) as unknown as typeof fetch;
 
     render(
       <Provider store={store}>

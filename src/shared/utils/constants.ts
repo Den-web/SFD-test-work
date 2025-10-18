@@ -1,4 +1,4 @@
-export const APP_NAME = "Archestr Admin";
+export const APP_NAME = "Exchange Rates Admin";
 
 export const ROUTES = {
   ROOT: "/",

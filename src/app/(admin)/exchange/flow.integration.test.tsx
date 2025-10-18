@@ -15,8 +15,11 @@ describe("exchange flow integration", () => {
       calls += 1;
       const base = url.match(/currencies\/(\w+)\.json/)?.[1] ?? "gbp";
       const map = base === "usd" ? { usd: 1, eur: 0.9, zar: 18 } : { usd: 1.2, eur: 1.1, zar: 20 };
-      return { ok: true, json: async () => ({ [base]: map }) } as any;
-    }) as any;
+      return {
+        ok: true,
+        json: async () => ({ [base]: map }),
+      } as Response as unknown as Promise<Response>;
+    }) as unknown as typeof fetch;
   });
 
   it("re-fetches 7 requests on base change and updates columns after target change", async () => {

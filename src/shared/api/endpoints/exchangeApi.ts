@@ -26,8 +26,13 @@ export const exchangeApi = baseApi.injectEndpoints({
           if (!res.ok) throw new Error("Failed to fetch currencies");
           const data = (await res.json()) as CurrenciesMap;
           return { data };
-        } catch (error: any) {
-          return { error };
+        } catch (error) {
+          return {
+            error: {
+              status: 500,
+              data: error instanceof Error ? error.message : String(error),
+            },
+          };
         }
       },
     }),
@@ -46,8 +51,13 @@ export const exchangeApi = baseApi.injectEndpoints({
           const entries = await Promise.all(requests);
           const ratesByDate: Record<string, RatesMap> = Object.fromEntries(entries);
           return { data: { dates, ratesByDate } };
-        } catch (error: any) {
-          return { error };
+        } catch (error) {
+          return {
+            error: {
+              status: 500,
+              data: error instanceof Error ? error.message : String(error),
+            },
+          };
         }
       },
     }),

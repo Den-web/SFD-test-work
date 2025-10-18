@@ -39,6 +39,15 @@ Production-ready Next.js (App Router) + TypeScript + Ant Design + Redux Toolkit 
 - `npm run lint` – ESLint (scoped to `src`)
 - `npm test` – unit tests
 
+## Releases
+
+- Conventional commits are enforced via Husky + commitlint.
+- Generate changelog and bump version:
+  ```bash
+  npm run release
+  git push --follow-tags origin main
+  ```
+
 ## Project structure
 
 See `src/` – Atomic Design (`shared/ui/`), `shared/api`, `shared/store`, `app/(admin)/*` with `exchange` page.

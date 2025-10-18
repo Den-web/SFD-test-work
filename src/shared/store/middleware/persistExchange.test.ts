@@ -18,12 +18,15 @@ function createTestStore(extraMiddleware?: Middleware) {
 }
 
 describe("persistExchangeMiddleware", () => {
-  const originalLocalStorage = global.localStorage;
+  const originalLocalStorage: Storage | undefined =
+    typeof global !== "undefined"
+      ? (global as unknown as { localStorage?: Storage }).localStorage
+      : undefined;
 
   beforeEach(() => {
     // Mock localStorage (simple in-memory store)
     const store: Record<string, string> = {};
-    const mocked = {
+    const mocked: Storage = {
       getItem: (k: string) => (k in store ? store[k] : null),
       setItem: (k: string, v: string) => {
         store[k] = String(v);
@@ -36,18 +39,33 @@ describe("persistExchangeMiddleware", () => {
       get length() {
         return Object.keys(store).length;
       },
-    } as any;
+    } as unknown as Storage; // satisfy readonly props on Storage in jsdom types
     // assign to both global and window since middleware uses window.localStorage
-    // assign to both global and window in test env
-    // @ts-ignore
-    global.localStorage = mocked;
-    // @ts-ignore
-    window.localStorage = mocked;
+    Object.defineProperty(global, "localStorage", {
+      value: mocked,
+      configurable: true,
+    });
+    Object.defineProperty(window, "localStorage", {
+      value: mocked,
+      configurable: true,
+    });
   });
 
   afterEach(() => {
-    // @ts-ignore
-    global.localStorage = originalLocalStorage;
+    if (originalLocalStorage) {
+      Object.defineProperty(global, "localStorage", {
+        value: originalLocalStorage,
+        configurable: true,
+      });
+      Object.defineProperty(window, "localStorage", {
+        value: originalLocalStorage,
+        configurable: true,
+      });
+    } else {
+      // cleanup if none existed
+      delete (global as unknown as Record<string, unknown>).localStorage;
+      delete (window as unknown as Record<string, unknown>).localStorage;
+    }
     jest.restoreAllMocks();
   });
 

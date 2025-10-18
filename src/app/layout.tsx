@@ -5,7 +5,7 @@ import { ConfigProvider } from "antd";
 import { customTheme } from "@/styles/theme";
 
 export const metadata = {
-  title: "Archestr Admin",
+  title: "Exchange Rates Admin",
   description: "Admin panel scaffold",
 };
 

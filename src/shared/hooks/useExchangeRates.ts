@@ -29,7 +29,7 @@ export function useExchangeRates({ baseCurrency, compareList, selectedDate }: Us
           const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${date}/v1/currencies/${baseCurrency}.json`;
           const res = await fetch(url);
           if (!res.ok) throw new Error(`Failed to fetch ${date}`);
-          const json = (await res.json()) as any;
+          const json = (await res.json()) as Record<string, Record<string, number>>;
           const map: Record<string, number> = json[baseCurrency];
           for (const code of compareList) {
             const key = code.toUpperCase();
@@ -39,8 +39,9 @@ export function useExchangeRates({ baseCurrency, compareList, selectedDate }: Us
           if (cancelled) return;
         }
         if (!cancelled) setSeries(result);
-      } catch (e: any) {
-        if (!cancelled) setError(e?.message || "Unknown error");
+      } catch (e) {
+        const message = e instanceof Error ? e.message : "Unknown error";
+        if (!cancelled) setError(message);
       } finally {
         if (!cancelled) setLoading(false);
       }

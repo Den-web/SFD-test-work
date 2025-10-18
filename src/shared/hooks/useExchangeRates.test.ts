@@ -6,7 +6,7 @@ const mockFetch = jest.fn();
 describe("useExchangeRates", () => {
   beforeEach(() => {
     mockFetch.mockReset();
-    global.fetch = mockFetch as any;
+    global.fetch = mockFetch as unknown as typeof fetch;
   });
 
   it("fetches 7 days sequentially and aggregates series", async () => {
@@ -22,7 +22,7 @@ describe("useExchangeRates", () => {
         json: async () => ({
           [base]: { usd: 1 + day / 100, eur: 0.8 + day / 100 },
         }),
-      } as any;
+      } as unknown as Response;
     });
 
     const { result } = renderHook(() =>

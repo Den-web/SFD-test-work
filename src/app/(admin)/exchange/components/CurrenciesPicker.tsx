@@ -20,7 +20,7 @@ export default function CurrenciesPicker() {
   }));
   const optionSet = new Set(entries.map(([code]) => code));
   const safeBaseValue = optionSet.has(baseCurrency) ? baseCurrency : undefined;
-  const safeTargets = targetCurrencies.filter((c) => optionSet.has(c));
+  const safeTargets = targetCurrencies.filter((c: string) => optionSet.has(c));
 
   return (
     <Space direction="vertical" size="middle" style={{ width: "100%" }}>
@@ -35,7 +35,7 @@ export default function CurrenciesPicker() {
           loading={!currencies}
           virtual={false}
           optionFilterProp="label"
-          onChange={(v) => dispatch(setBaseCurrency(v))}
+          onChange={(v: string) => dispatch(setBaseCurrency(v))}
         />
       </div>
 
@@ -49,8 +49,8 @@ export default function CurrenciesPicker() {
           loading={!currencies}
           virtual={false}
           optionFilterProp="label"
-          onSelect={(v) => dispatch(addTargetCurrency(v))}
-          onDeselect={(v) => dispatch(removeTargetCurrency(v))}
+          onSelect={(v: string) => dispatch(addTargetCurrency(v))}
+          onDeselect={(v: string) => dispatch(removeTargetCurrency(v))}
         />
       </div>
     </Space>
