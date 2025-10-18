@@ -2,13 +2,13 @@ import type { Middleware } from "@reduxjs/toolkit";
 
 const STORAGE_KEY = "exchange_prefs_v1";
 
-export const persistExchangeMiddleware: Middleware = (storeApi) => (next) => (action) => {
+export const persistExchangeMiddleware: Middleware = (storeApi) => (next) => (action: any) => {
   const result = next(action);
   try {
     if (typeof window === "undefined") return result;
     // persist on any exchange action except hydration to avoid loops
     if (
-      typeof action.type === "string" &&
+      typeof action?.type === "string" &&
       action.type.startsWith("exchange/") &&
       action.type !== "exchange/hydrate"
     ) {
