@@ -46,7 +46,7 @@ describe("persistExchangeMiddleware", () => {
   });
 
   afterEach(() => {
-    // @ts-expect-error restore
+    // @ts-ignore
     global.localStorage = originalLocalStorage;
     jest.restoreAllMocks();
   });
